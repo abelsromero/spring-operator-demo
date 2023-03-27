@@ -2,16 +2,16 @@
 
 set -euo pipefail
 
-readonly output_path="generated/java"
-readonly crdmodelgen_tag="v1.0.6"
+readonly crd_modelgen_tag="v1.0.6"
+readonly crd_package="org.demo.boring"
 readonly manifests_path="manifests/crds"
+readonly output_path="generated/java"
 
 function log_step() {
   echo "[STEP] $1"
 }
 
 function clean() {
-  # FIXME fails in Linux since container runs as linux and files need sudo
   rm -rf "$output_path" || true
 }
 
@@ -25,12 +25,15 @@ function generate() {
     -v /var/run/docker.sock:/var/run/docker.sock \
     -ti \
     --network host \
-    "ghcr.io/kubernetes-client/java/crd-model-gen:$crdmodelgen_tag" \
+    "ghcr.io/kubernetes-client/java/crd-model-gen:$crd_modelgen_tag" \
     /generate.sh \
-    -u "/tmp/crds/udp-crd.yaml" \
+    -u "/tmp/crds/spring-deployment-crd.yaml" \
+    -n "$crd_package" \
+    -p "$crd_package" \
     -o "$(pwd)/$output_path"
 
-  chown
+# TODO move classes
+  sudo chown -R $(whoami):$(whoami) generated
 }
 
 function main() {

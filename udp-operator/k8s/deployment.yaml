@@ -2,20 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: udp-operator
-  name: udp-operator
+    app: spring-deploy-operator
+  name: spring-deploy-operator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: udp-operator
+      app: spring-deploy-operator
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: udp-operator
+        app: spring-deploy-operator
     spec:
-      serviceAccountName: udp-operator-sa
+      serviceAccountName: operator-sa
       containers:
         - image: udp-operator:0.0.1-SNAPSHOT
-          name: udp-operator
+          name: spring-deploy-operator
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"

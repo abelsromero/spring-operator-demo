@@ -1,14 +1,14 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: udp-operator-role-binding
+  name: operator-role-binding
 #  labels:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: udp-operator-role
+  name: operator-role
 subjects:
 - kind: ServiceAccount
-  name: udp-operator-sa
+  name: operator-sa
   # this is mandatory
-  namespace: udp-operator
+  namespace: spring-deploy-operator

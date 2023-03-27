@@ -1,4 +1,4 @@
-package org.abelsromero.udp.operator;
+package org.abelsromero.udp.operator.cm;
 
 import io.kubernetes.client.extended.controller.Controller;
 import io.kubernetes.client.extended.controller.builder.ControllerBuilder;
@@ -9,14 +9,11 @@ import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.openapi.models.V1ConfigMap;
 import io.kubernetes.client.openapi.models.V1ConfigMapList;
 import io.kubernetes.client.util.generic.GenericKubernetesApi;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
-import java.util.concurrent.Executors;
 
-@Configuration
+//@Configuration
 public class ConfigMapReconcilerConfiguration {
 
     // Use shared informer instead of direct API calls
@@ -54,22 +51,6 @@ public class ConfigMapReconcilerConfiguration {
             .withReconciler(reconciler)
             .withName("ConfigMapController")
             .build();
-//        return ControllerBuilder
-//            .defaultBuilder(sharedInformerFactory)
-//            .watch(workQueue -> ControllerBuilder.controllerWatchBuilder(V1ConfigMap.class, workQueue)
-//                .withResyncPeriod(Duration.ofHours(1))
-//                // necessary?
-//                .withOnUpdateFilter(reconciler::onUpdateFilter)
-//                .withOnDeleteFilter(reconciler::onDeleteFilter)
-//                .withOnAddFilter(reconciler::onAddFilter)
-//                .build())
-//            // default 16
-//            .withWorkerCount(2)
-//            // why ?
-//            .withReadyFunc(reconciler::hasSynced)
-//            .withReconciler(reconciler)
-//            .withName("RouteConfigController")
-//            .build();
     }
 
     @Bean
@@ -84,14 +65,5 @@ public class ConfigMapReconcilerConfiguration {
 //    public SharedInformerFactory sharedInformerFactory() {
 //        return new SharedInformerFactory();
 //    }
-
-    @Bean
-    ApplicationRunner runner(SharedInformerFactory sharedInformerFactory, Controller controller) {
-        var executorService = Executors.newCachedThreadPool();
-        return args -> executorService.execute(() -> {
-            sharedInformerFactory.startAllRegisteredInformers();
-            controller.run();
-        });
-    }
 
 }

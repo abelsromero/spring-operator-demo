@@ -1,5 +1,6 @@
 = Spring K8s Operator example
 
+// Uninteresting Deployment
 
 == Creation
 
@@ -13,6 +14,8 @@
 == Interesting facts
 
 * Native image image size vs Java
+    native: 128 MB or less
+    Java: 512 minimum, but only for startup though
 
 == Build & deploy
 
@@ -160,6 +163,9 @@ public SharedIndexInformer<V1ConfigMap> configMapIndexInformer(SharedInformerFac
 
 
 == For talks
+
+* Idea:
+    Make Spring Operator for Spring Apps that provides "nice defaults"
 
 Diagram to explain
 - Controller

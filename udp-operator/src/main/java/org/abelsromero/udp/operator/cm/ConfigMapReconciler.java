@@ -1,4 +1,4 @@
-package org.abelsromero.udp.operator;
+package org.abelsromero.udp.operator.cm;
 
 
 import io.kubernetes.client.extended.controller.reconciler.Reconciler;
@@ -11,12 +11,11 @@ import io.kubernetes.client.openapi.models.V1ConfigMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// important
 public class ConfigMapReconciler implements Reconciler {
 
     private static final Logger logger = LoggerFactory.getLogger(ConfigMapReconciler.class);
 
-    private static final String NAMESPACE = "udp-operator";
+    private static final String NAMESPACE = "spring-deploy-operator";
 
     private final SharedIndexInformer<V1ConfigMap> informer;
     private final Lister<V1ConfigMap> configMapLister;
@@ -32,11 +31,12 @@ public class ConfigMapReconciler implements Reconciler {
     @Override
     public Result reconcile(Request request) {
         if (request.getNamespace().equals(NAMESPACE)) {
-            logger.info("Received request: {}", request);
+            logger.info("Received request (original): {}", request);
             configMapLister.namespace(NAMESPACE)
                 .list()
                 .forEach(configMap -> {
-                    logger.info("Found config map (from reconciller): " + configMap.getMetadata().getName());
+                    logger.info("Found config map (from reconciler): " + configMap.getMetadata().getName());
+                    logger.info("{}", configMap);
                 });
         }
         // causing a loop to see logs
@@ -49,10 +49,10 @@ public class ConfigMapReconciler implements Reconciler {
     }
 
     public boolean onUpdateFilter(V1ConfigMap v1ConfigMap, V1ConfigMap v1ConfigMap1) {
-        return false;
+        return true;
     }
 
-    public boolean onDeleteFilter(V1ConfigMap v1ConfigMap, Boolean aBoolean) {
+    public boolean onDeleteFilter(V1ConfigMap v1ConfigMap, Boolean v1ConfigMap1) {
         return false;
     }
 

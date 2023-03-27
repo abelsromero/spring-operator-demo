@@ -11,11 +11,10 @@
  */
 
 
-package .models;
+package org.demo.boring.models;
 
 import java.util.Objects;
 import java.util.Arrays;
-import .models.V1CronTab;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -27,20 +26,21 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.demo.boring.models.V1SpringDeployment;
 
 /**
- * CronTabList is a list of CronTab
+ * SpringDeploymentList is a list of SpringDeployment
  */
-@ApiModel(description = "CronTabList is a list of CronTab")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-27T13:38:07.113Z[Etc/UTC]")
-public class V1CronTabList implements io.kubernetes.client.common.KubernetesListObject {
+@ApiModel(description = "SpringDeploymentList is a list of SpringDeployment")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-27T19:23:52.855Z[Etc/UTC]")
+public class V1SpringDeploymentList implements io.kubernetes.client.common.KubernetesListObject {
   public static final String SERIALIZED_NAME_API_VERSION = "apiVersion";
   @SerializedName(SERIALIZED_NAME_API_VERSION)
   private String apiVersion;
 
   public static final String SERIALIZED_NAME_ITEMS = "items";
   @SerializedName(SERIALIZED_NAME_ITEMS)
-  private List<V1CronTab> items = new ArrayList<>();
+  private List<V1SpringDeployment> items = new ArrayList<>();
 
   public static final String SERIALIZED_NAME_KIND = "kind";
   @SerializedName(SERIALIZED_NAME_KIND)
@@ -51,7 +51,7 @@ public class V1CronTabList implements io.kubernetes.client.common.KubernetesList
   private V1ListMeta metadata = null;
 
 
-  public V1CronTabList apiVersion(String apiVersion) {
+  public V1SpringDeploymentList apiVersion(String apiVersion) {
     
     this.apiVersion = apiVersion;
     return this;
@@ -74,34 +74,34 @@ public class V1CronTabList implements io.kubernetes.client.common.KubernetesList
   }
 
 
-  public V1CronTabList items(List<V1CronTab> items) {
+  public V1SpringDeploymentList items(List<V1SpringDeployment> items) {
     
     this.items = items;
     return this;
   }
 
-  public V1CronTabList addItemsItem(V1CronTab itemsItem) {
+  public V1SpringDeploymentList addItemsItem(V1SpringDeployment itemsItem) {
     this.items.add(itemsItem);
     return this;
   }
 
    /**
-   * List of crontabs. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md
+   * List of springdeployments. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md
    * @return items
   **/
-  @ApiModelProperty(required = true, value = "List of crontabs. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md")
+  @ApiModelProperty(required = true, value = "List of springdeployments. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md")
 
-  public List<V1CronTab> getItems() {
+  public List<V1SpringDeployment> getItems() {
     return items;
   }
 
 
-  public void setItems(List<V1CronTab> items) {
+  public void setItems(List<V1SpringDeployment> items) {
     this.items = items;
   }
 
 
-  public V1CronTabList kind(String kind) {
+  public V1SpringDeploymentList kind(String kind) {
     
     this.kind = kind;
     return this;
@@ -124,7 +124,7 @@ public class V1CronTabList implements io.kubernetes.client.common.KubernetesList
   }
 
 
-  public V1CronTabList metadata(V1ListMeta metadata) {
+  public V1SpringDeploymentList metadata(V1ListMeta metadata) {
     
     this.metadata = metadata;
     return this;
@@ -155,11 +155,11 @@ public class V1CronTabList implements io.kubernetes.client.common.KubernetesList
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1CronTabList v1CronTabList = (V1CronTabList) o;
-    return Objects.equals(this.apiVersion, v1CronTabList.apiVersion) &&
-        Objects.equals(this.items, v1CronTabList.items) &&
-        Objects.equals(this.kind, v1CronTabList.kind) &&
-        Objects.equals(this.metadata, v1CronTabList.metadata);
+    V1SpringDeploymentList v1SpringDeploymentList = (V1SpringDeploymentList) o;
+    return Objects.equals(this.apiVersion, v1SpringDeploymentList.apiVersion) &&
+        Objects.equals(this.items, v1SpringDeploymentList.items) &&
+        Objects.equals(this.kind, v1SpringDeploymentList.kind) &&
+        Objects.equals(this.metadata, v1SpringDeploymentList.metadata);
   }
 
   @Override
@@ -171,7 +171,7 @@ public class V1CronTabList implements io.kubernetes.client.common.KubernetesList
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1CronTabList {\n");
+    sb.append("class V1SpringDeploymentList {\n");
     sb.append("    apiVersion: ").append(toIndentedString(apiVersion)).append("\n");
     sb.append("    items: ").append(toIndentedString(items)).append("\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");

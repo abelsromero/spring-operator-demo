@@ -1,0 +1,7 @@
+apiVersion: "boring.demo.org/v1"
+kind: SpringDeployment
+metadata:
+  name: test-spring-deployment
+spec:
+  replicas: 2
+  name: hello-madrid

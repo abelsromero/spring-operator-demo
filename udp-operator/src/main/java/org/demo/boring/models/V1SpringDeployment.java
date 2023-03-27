@@ -11,11 +11,10 @@
  */
 
 
-package .models;
+package org.demo.boring.models;
 
 import java.util.Objects;
 import java.util.Arrays;
-import .models.V1CronTabSpec;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -25,12 +24,13 @@ import io.kubernetes.client.openapi.models.V1ObjectMeta;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import org.demo.boring.models.V1SpringDeploymentSpec;
 
 /**
- * V1CronTab
+ * V1SpringDeployment
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-27T13:38:07.113Z[Etc/UTC]")
-public class V1CronTab implements io.kubernetes.client.common.KubernetesObject {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-27T19:23:52.855Z[Etc/UTC]")
+public class V1SpringDeployment implements io.kubernetes.client.common.KubernetesObject {
   public static final String SERIALIZED_NAME_API_VERSION = "apiVersion";
   @SerializedName(SERIALIZED_NAME_API_VERSION)
   private String apiVersion;
@@ -45,10 +45,10 @@ public class V1CronTab implements io.kubernetes.client.common.KubernetesObject {
 
   public static final String SERIALIZED_NAME_SPEC = "spec";
   @SerializedName(SERIALIZED_NAME_SPEC)
-  private V1CronTabSpec spec;
+  private V1SpringDeploymentSpec spec;
 
 
-  public V1CronTab apiVersion(String apiVersion) {
+  public V1SpringDeployment apiVersion(String apiVersion) {
     
     this.apiVersion = apiVersion;
     return this;
@@ -71,7 +71,7 @@ public class V1CronTab implements io.kubernetes.client.common.KubernetesObject {
   }
 
 
-  public V1CronTab kind(String kind) {
+  public V1SpringDeployment kind(String kind) {
     
     this.kind = kind;
     return this;
@@ -94,7 +94,7 @@ public class V1CronTab implements io.kubernetes.client.common.KubernetesObject {
   }
 
 
-  public V1CronTab metadata(V1ObjectMeta metadata) {
+  public V1SpringDeployment metadata(V1ObjectMeta metadata) {
     
     this.metadata = metadata;
     return this;
@@ -117,7 +117,7 @@ public class V1CronTab implements io.kubernetes.client.common.KubernetesObject {
   }
 
 
-  public V1CronTab spec(V1CronTabSpec spec) {
+  public V1SpringDeployment spec(V1SpringDeploymentSpec spec) {
     
     this.spec = spec;
     return this;
@@ -130,12 +130,12 @@ public class V1CronTab implements io.kubernetes.client.common.KubernetesObject {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1CronTabSpec getSpec() {
+  public V1SpringDeploymentSpec getSpec() {
     return spec;
   }
 
 
-  public void setSpec(V1CronTabSpec spec) {
+  public void setSpec(V1SpringDeploymentSpec spec) {
     this.spec = spec;
   }
 
@@ -148,11 +148,11 @@ public class V1CronTab implements io.kubernetes.client.common.KubernetesObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1CronTab v1CronTab = (V1CronTab) o;
-    return Objects.equals(this.apiVersion, v1CronTab.apiVersion) &&
-        Objects.equals(this.kind, v1CronTab.kind) &&
-        Objects.equals(this.metadata, v1CronTab.metadata) &&
-        Objects.equals(this.spec, v1CronTab.spec);
+    V1SpringDeployment v1SpringDeployment = (V1SpringDeployment) o;
+    return Objects.equals(this.apiVersion, v1SpringDeployment.apiVersion) &&
+        Objects.equals(this.kind, v1SpringDeployment.kind) &&
+        Objects.equals(this.metadata, v1SpringDeployment.metadata) &&
+        Objects.equals(this.spec, v1SpringDeployment.spec);
   }
 
   @Override
@@ -164,7 +164,7 @@ public class V1CronTab implements io.kubernetes.client.common.KubernetesObject {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1CronTab {\n");
+    sb.append("class V1SpringDeployment {\n");
     sb.append("    apiVersion: ").append(toIndentedString(apiVersion)).append("\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
