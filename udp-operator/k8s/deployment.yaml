@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: udp-operator
+  name: udp-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: udp-operator
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: udp-operator
+    spec:
+      serviceAccountName: udp-operator-sa
+      containers:
+        - image: udp-operator:0.0.1-SNAPSHOT
+          name: udp-operator
