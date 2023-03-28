@@ -1,27 +1,36 @@
 = Spring K8s Operator example
 
-// Uninteresting Deployment
+Example of a K8s operator using Spring Boot v3 and the https://github.com/kubernetes-client/java[Official Kubernetes Java client].
 
-== Creation
+== Structure
 
-* Create 2 projects with https://start.spring.io
-    * udp: actuator, web
-    * udp-operator: actuator, web,
-
-* udp-operator
-    * Added `io.kubernetes:client-java-*` dependencies
-
-== Interesting facts
-
-* Native image image size vs Java
-    native: 128 MB or less
-    Java: 512 minimum, but only for startup though
+* 2 projects with https://start.spring.io.
+** default-spring-boot-app: normal web app used as example of Spring Boot app (with actuator, web)
+** spring-deployment-operator: the actual focus of this repo, the K8s native operator.
+* 1 `scripts` directory with utilities.
+* 1 `manifests` directory for Kubernetes configuration.
 
 == Build & deploy
 
-Cannot be run as app until permissions are right.
-Locally api calls work, but not the controller in k8s
+=== Generating Model classes from CRD
 
+The example crd found in _spring-operator-demo/manifests/crds/spring-deployment-crd.yaml_ defines a new K8s resource to manage Spring Boot deployments.
+To generate the Model classes to be used in our operator run `./scripts/generate_model.sh`.
+
+=== Running in local k8s cluster
+
+Create https://kind.sigs.k8s.io/[KinD] cluster.
+
+ kind create cluster --config kind-config.yaml
+
+Run build and deploy script
+
+ ./scripts/build_and_deploy.sh
+
+=== Direct execution
+
+Cannot be run as app until permissions are correctly set.
+Locally api calls work, but not the controller in k8s
 
 So long you have `.kube/config`, the kubernetes client will connect.
 
@@ -29,170 +38,55 @@ So long you have `.kube/config`, the kubernetes client will connect.
 
 Start `OperatorApplication` from IntelliJ
 
- ./udp-operator/gradlew -p udp-operator bootBuildImage
- kind load docker-image udp-operator:0.0.1-SNAPSHOT
+ ./spring-deployment-operator/gradlew -p spring-deployment-operator bootBuildImage
+ kind load docker-image spring-deployment-operator:0.0.1-SNAPSHOT
 
-=== As k8s deployment
+== Running the example
+:operator-namespace: spring-deploy-operator
 
- ./udp/gradlew -p udp bootBuildImage
- ./udp-operator/gradlew -p udp-operator bootBuildImage
+After running `build_and_deploy.sh` you should see the operator pod running in `{operator-namespace}` with:
 
-kind load docker-image udp-operator:0.0.1-SNAPSHOT
+ kubectl get pods -n spring-deploy-operator
 
-== TODO
+Apply the example provided.
 
-* make native/jvm modes configurable with property
-* Revisar labels from operator yamls
-* Use ytt to template the installation files
-* Generate clients
-    * Generate with Jackson instead of gson and see how many deps we safe
-* Controller with leader election
-* Demo of app with https://docs.spring.io/spring-cloud-kubernetes/docs/current/reference/html/
+ kubectl apply -f manifests/examples/spring-deployment.yaml
 
-
-== Known issue
-
-=== PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+Then, list the pods again to see the new deployment and 2 pods associated with it.
 
 ----
-2023-02-28T23:02:54.274+01:00  INFO 56470 --- [s.V1ConfigMap-1] i.k.c.informer.cache.ReflectorRunnable   : class io.kubernetes.client.openapi.models.V1ConfigMap#Start listing and watching...
-2023-02-28T23:02:54.285+01:00 ERROR 56470 --- [s.V1ConfigMap-1] i.k.c.informer.cache.ReflectorRunnable   : class io.kubernetes.client.openapi.models.V1ConfigMap#Reflector loop failed unexpectedly
+> kubectl get deploy -n spring-deploy-operator
 
-io.kubernetes.client.openapi.ApiException: javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
-	at io.kubernetes.client.util.Watch.createWatch(Watch.java:111) ~[client-java-17.0.1.jar:na]
-	at io.kubernetes.client.informer.SharedInformerFactory$1.watch(SharedInformerFactory.java:230) ~[client-java-17.0.1.jar:na]
-	at io.kubernetes.client.informer.SharedInformerFactory$1.watch(SharedInformerFactory.java:218) ~[client-java-17.0.1.jar:na]
-	at io.kubernetes.client.informer.cache.ReflectorRunnable.run(ReflectorRunnable.java:124) ~[client-java-17.0.1.jar:na]
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
-	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305) ~[na:na]
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
-	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
-Caused by: javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
-	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:131) ~[na:na]
-	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:371) ~[na:na]
-	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:314) ~[na:na]
-	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:309) ~[na:na]
-	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1357) ~[na:na]
-	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(CertificateMessage.java:1232) ~[na:na]
-	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(CertificateMessage.java:1175) ~[na:na]
-	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:396) ~[na:na]
-	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:480) ~[na:na]
-	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:458) ~[na:na]
-	at java.base/sun.security.ssl.TransportContext.dispatch(TransportContext.java:201) ~[na:na]
-	at java.base/sun.security.ssl.SSLTransport.decode(SSLTransport.java:172) ~[na:na]
-	at java.base/sun.security.ssl.SSLSocketImpl.decode(SSLSocketImpl.java:1510) ~[na:na]
-	at java.base/sun.security.ssl.SSLSocketImpl.readHandshakeRecord(SSLSocketImpl.java:1425) ~[na:na]
-	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:455) ~[na:na]
-	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:426) ~[na:na]
-	at okhttp3.internal.connection.RealConnection.connectTls(RealConnection.kt:379) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.connection.RealConnection.establishProtocol(RealConnection.kt:337) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:209) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.10.0.jar:na]
-	at okhttp3.internal.connection.RealCall.execute(RealCall.kt:154) ~[okhttp-4.10.0.jar:na]
-	at io.kubernetes.client.util.Watch.createWatch(Watch.java:95) ~[client-java-17.0.1.jar:na]
-	... 9 common frames omitted
-Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
-	at java.base/sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:439) ~[na:na]
-	at java.base/sun.security.validator.PKIXValidator.engineValidate(PKIXValidator.java:306) ~[na:na]
-	at java.base/sun.security.validator.Validator.validate(Validator.java:264) ~[na:na]
-	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:231) ~[na:na]
-	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:132) ~[na:na]
-	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1341) ~[na:na]
-	... 38 common frames omitted
-Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
-	at java.base/sun.security.provider.certpath.SunCertPathBuilder.build(SunCertPathBuilder.java:141) ~[na:na]
-	at java.base/sun.security.provider.certpath.SunCertPathBuilder.engineBuild(SunCertPathBuilder.java:126) ~[na:na]
-	at java.base/java.security.cert.CertPathBuilder.build(CertPathBuilder.java:297) ~[na:na]
-	at java.base/sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:434) ~[na:na]
-	... 43 common frames omitted
-
+NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+hello-madrid                 2/2     2            2           3m3s
+spring-deployment-operator   1/1     1            1           43m
 ----
 
-When using
-
 ----
-@Bean
-public SharedIndexInformer<V1ConfigMap> configMapIndexInformer(CoreV1Api appsV1Api,
-                                                               SharedInformerFactory factory) {
-    return factory.sharedIndexInformerFor(
-        params -> appsV1Api.listConfigMapForAllNamespacesCall(null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            params.resourceVersion,
-            null,
-            params.timeoutSeconds,
-            params.watch,
-            null),
-        V1ConfigMap.class, V1ConfigMapList.class, 10L);
-}
+> kubectl get pods -n spring-deploy-operator
+
+NAME                                          READY   STATUS    RESTARTS   AGE
+hello-madrid-6d4f4dc5c6-fwd7l                 1/1     Running   0          2m16s
+hello-madrid-6d4f4dc5c6-v4sck                 1/1     Running   0          2m16s
+spring-deployment-operator-6b6cb9655b-m8zjl   1/1     Running   0          42m
 ----
 
-Solution:
+As a bonus, since we installed metrics server, we can monitor the resources to see the difference between the normal deployments and a native one.
+
+NOTE: Numbers may vary.
 
 ----
-@Bean
-GenericKubernetesApi<V1ConfigMap, V1ConfigMapList> configmapsGenericApi(ApiClient apiClient) {
-    return new GenericKubernetesApi<>(V1ConfigMap.class, V1ConfigMapList.class,
-        "", "v1", "configmaps",
-        apiClient);
-}
+> kubectl top pods
 
-@Bean
-public SharedIndexInformer<V1ConfigMap> configMapIndexInformer(SharedInformerFactory factory,
-                                                               GenericKubernetesApi<V1ConfigMap, V1ConfigMapList> genericApi) {
-    return factory.sharedIndexInformerFor(genericApi, V1ConfigMap.class, 0);
-}
+NAME                                          CPU(cores)   MEMORY(bytes)
+hello-madrid-6d4f4dc5c6-fwd7l                 9m           158Mi
+hello-madrid-6d4f4dc5c6-v4sck                 6m           155Mi
+spring-deployment-operator-6b6cb9655b-m8zjl   1m           44Mi
 ----
 
+== Learnt lessons
 
-== For talks
-
-* Idea:
-    Make Spring Operator for Spring Apps that provides "nice defaults"
-
-Diagram to explain
-- Controller
-- Reconciler
-- Informer/SharedInformers/SharedIndexInformers
-
-- CRD vs CR
-
-* Remember
-    - Expolain Reconclier scenarios
-        - check if exists
-            -> delete if not
-        -> create
-            -> if fails
-                -> update
-
-    - Set cr as owner in create resources
-
-* Boot 3 stuff
-    Java 17
-
-* About model generation
-    * Creates a kind cluster, fail if you already have another one
-    *
-
-* Tips
-    * remove timestamp from generated Java code if you commit
+* Remove timestamp from generated Java code if you commit
 
 == References
 

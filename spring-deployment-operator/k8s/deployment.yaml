@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: spring-deployment-operator
+  name: spring-deployment-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-deployment-operator
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: spring-deployment-operator
+    spec:
+      serviceAccountName: operator-sa
+      containers:
+        - image: spring-deployment-operator:0.0.1-SNAPSHOT
+          name: spring-deployment-operator
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
