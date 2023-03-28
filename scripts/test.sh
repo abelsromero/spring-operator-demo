@@ -28,7 +28,7 @@ function build_and_push_app() {
   log_step "${FUNCNAME[0]}"
   local -r app_image="$app_module:0.0.1-SNAPSHOT"
   docker rmi "$app_image" || true
-  ./udp/gradlew -p $app_module bootBuildImage
+  ./$app_module/gradlew -p $app_module bootBuildImage
   kind load docker-image "$app_image"
 }
 
@@ -64,8 +64,11 @@ function run_deployment_test() {
 function main() {
   clean_up
   install_metrics_server
+
   build_and_push_app
   build_and_push_operator
+
+
   deploy_operator
 
   #kubectl wait pod --for=condition=ready -n $install_namespace -l "name=$pod_name"
