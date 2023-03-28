@@ -27,8 +27,8 @@ spec:
                 image:
                   type: string
                   description: Full name for the deployment image.
-          required:
-            - name
+#          required:
+#            - name
   scope: Namespaced
   names:
     plural: springdeployments
