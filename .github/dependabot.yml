@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "default-spring-boot-app"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+  - package-ecosystem: "gradle"
+    directory: "spring-deployment-operator"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
