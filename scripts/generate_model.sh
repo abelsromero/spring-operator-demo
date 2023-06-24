@@ -4,7 +4,7 @@ set -euo pipefail
 
 readonly crd_modelgen_tag="v1.0.6"
 readonly crd_group="org.demo.boring"
-readonly crd_destination_package="org.abelsromero.springdeployment.operator"
+readonly crd_destination_package="org.abelsromero.springoperator"
 readonly manifests_path="manifests/crds"
 readonly output_path="generated/java"
 

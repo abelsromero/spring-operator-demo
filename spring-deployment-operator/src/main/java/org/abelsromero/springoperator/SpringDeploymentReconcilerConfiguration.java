@@ -1,4 +1,4 @@
-package org.abelsromero.springdeployment.operator;
+package org.abelsromero.springoperator;
 
 import io.kubernetes.client.extended.controller.Controller;
 import io.kubernetes.client.extended.controller.builder.ControllerBuilder;
@@ -8,8 +8,8 @@ import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.apis.AppsV1Api;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.util.generic.GenericKubernetesApi;
-import org.abelsromero.springdeployment.operator.models.V1SpringDeployment;
-import org.abelsromero.springdeployment.operator.models.V1SpringDeploymentList;
+import org.abelsromero.springoperator.models.V1SpringDeployment;
+import org.abelsromero.springoperator.models.V1SpringDeploymentList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

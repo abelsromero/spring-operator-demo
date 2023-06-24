@@ -1,6 +1,6 @@
-package org.abelsromero.springdeployment.operator;
+package org.abelsromero.springoperator;
 
-import org.abelsromero.springdeployment.operator.aot.CrdModelRuntimeHints;
+import org.abelsromero.springoperator.aot.CrdModelRuntimeHints;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;

@@ -1,10 +1,10 @@
-package org.abelsromero.springdeployment.operator;
+package org.abelsromero.springoperator;
 
 import io.kubernetes.client.custom.IntOrString;
 import io.kubernetes.client.custom.Quantity;
 import io.kubernetes.client.openapi.models.*;
-import org.abelsromero.springdeployment.operator.models.V1SpringDeployment;
-import org.abelsromero.springdeployment.operator.models.V1SpringDeploymentSpec;
+import org.abelsromero.springoperator.models.V1SpringDeployment;
+import org.abelsromero.springoperator.models.V1SpringDeploymentSpec;
 
 import java.util.List;
 import java.util.Map;

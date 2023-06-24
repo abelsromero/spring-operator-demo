@@ -1,4 +1,4 @@
-package org.abelsromero.springdeployment.operator;
+package org.abelsromero.springoperator;
 
 
 import io.kubernetes.client.custom.V1Patch;
@@ -13,14 +13,14 @@ import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.openapi.models.V1Deployment;
 import io.kubernetes.client.openapi.models.V1DeploymentList;
 import io.kubernetes.client.util.PatchUtils;
-import org.abelsromero.springdeployment.operator.models.V1SpringDeployment;
-import org.abelsromero.springdeployment.operator.models.V1SpringDeploymentSpec;
+import org.abelsromero.springoperator.models.V1SpringDeployment;
+import org.abelsromero.springoperator.models.V1SpringDeploymentSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-import static org.abelsromero.springdeployment.operator.SpringDeploymentReconciler.ApiExceptionHelper.wrapApiException;
+import static org.abelsromero.springoperator.SpringDeploymentReconciler.ApiExceptionHelper.wrapApiException;
 import static org.springframework.util.StringUtils.hasText;
 
 public class SpringDeploymentReconciler implements Reconciler {

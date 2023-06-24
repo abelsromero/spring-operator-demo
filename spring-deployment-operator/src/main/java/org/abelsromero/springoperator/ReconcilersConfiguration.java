@@ -1,4 +1,4 @@
-package org.abelsromero.springdeployment.operator;
+package org.abelsromero.springoperator;
 
 import io.kubernetes.client.extended.controller.Controller;
 import io.kubernetes.client.informer.SharedInformerFactory;

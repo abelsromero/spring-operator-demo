@@ -1,4 +1,4 @@
-package org.abelsromero.springdeployment.operator;
+package org.abelsromero.springoperator;
 
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.apis.AppsV1Api;

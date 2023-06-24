@@ -1,8 +1,8 @@
-package org.abelsromero.springdeployment.operator.aot;
+package org.abelsromero.springoperator.aot;
 
-import org.abelsromero.springdeployment.operator.models.V1SpringDeployment;
-import org.abelsromero.springdeployment.operator.models.V1SpringDeploymentList;
-import org.abelsromero.springdeployment.operator.models.V1SpringDeploymentSpec;
+import org.abelsromero.springoperator.models.V1SpringDeployment;
+import org.abelsromero.springoperator.models.V1SpringDeploymentList;
+import org.abelsromero.springoperator.models.V1SpringDeploymentSpec;
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
