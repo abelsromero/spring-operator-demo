@@ -10,7 +10,6 @@ import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.util.generic.GenericKubernetesApi;
 import org.abelsromero.springdeployment.operator.models.V1SpringDeployment;
 import org.abelsromero.springdeployment.operator.models.V1SpringDeploymentList;
-import org.abelsromero.springdeployment.operator.models.V1SpringDeploymentSpec;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -57,5 +56,4 @@ class SpringDeploymentReconcilerConfiguration {
                                                           GenericKubernetesApi<V1SpringDeployment, V1SpringDeploymentList> genericApi) {
         return factory.sharedIndexInformerFor(genericApi, V1SpringDeployment.class, 0);
     }
-
 }

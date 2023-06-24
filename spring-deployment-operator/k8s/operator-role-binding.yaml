@@ -7,6 +7,6 @@ roleRef:
   kind: ClusterRole
   name: operator-role
 subjects:
-- kind: ServiceAccount
-  name: operator-sa
-  namespace: spring-deploy-operator
+  - kind: ServiceAccount
+    name: operator-sa
+    namespace: spring-deploy-operator

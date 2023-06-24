@@ -9,8 +9,8 @@ import org.springframework.context.annotation.ImportRuntimeHints;
 @ImportRuntimeHints(CrdModelRuntimeHints.class)
 public class OperatorApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(OperatorApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(OperatorApplication.class, args);
+    }
 
 }

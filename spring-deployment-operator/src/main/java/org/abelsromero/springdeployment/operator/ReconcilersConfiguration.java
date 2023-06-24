@@ -20,5 +20,4 @@ public class ReconcilersConfiguration {
             controllers.forEach(Runnable::run);
         });
     }
-
 }
