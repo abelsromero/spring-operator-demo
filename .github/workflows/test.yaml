@@ -1,0 +1,58 @@
+name: Build & Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        java:
+          - '17'
+          - '19'
+        os:
+          - ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+      - name: Test App
+        run: |
+          cd default-spring-boot-app
+          ./gradlew test
+      - name: Test Operator
+        run: |
+          cd spring-deployment-operator
+          ./gradlew test
+  build-native-operator:
+    strategy:
+      fail-fast: false
+      matrix:
+        java:
+          - '17'
+        os:
+          - ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+      - name: Build native image
+        run: |
+          cd spring-deployment-operator
+          ./gradlew bootBuildImage
