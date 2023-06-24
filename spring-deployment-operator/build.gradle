@@ -2,9 +2,9 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
   id 'java'
-  id 'org.springframework.boot' version '3.0.5'
+  id 'org.springframework.boot' version '3.0.8'
   // Comment graalvm plugin to build operator as normal Java
-  id 'org.graalvm.buildtools.native' version '0.9.20'
+  id 'org.graalvm.buildtools.native' version '0.9.22'
 }
 
 group = 'org.abelsromero.springdeployment'
