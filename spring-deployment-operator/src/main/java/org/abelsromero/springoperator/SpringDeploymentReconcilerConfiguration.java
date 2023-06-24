@@ -4,6 +4,7 @@ import io.kubernetes.client.extended.controller.Controller;
 import io.kubernetes.client.extended.controller.builder.ControllerBuilder;
 import io.kubernetes.client.informer.SharedIndexInformer;
 import io.kubernetes.client.informer.SharedInformerFactory;
+import io.kubernetes.client.informer.cache.Lister;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.apis.AppsV1Api;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
@@ -38,10 +39,10 @@ class SpringDeploymentReconcilerConfiguration {
     }
 
     @Bean
-    SpringDeploymentReconciler reconciler(SharedIndexInformer<V1SpringDeployment> lister,
+    SpringDeploymentReconciler reconciler(SharedIndexInformer<V1SpringDeployment> sharedIndexInformer,
                                           CoreV1Api coreV1Api,
                                           AppsV1Api appsV1Api) {
-        return new SpringDeploymentReconciler(lister, coreV1Api, appsV1Api);
+        return new SpringDeploymentReconciler(sharedIndexInformer, new Lister<>(sharedIndexInformer.getIndexer()), coreV1Api, appsV1Api);
     }
 
     @Bean

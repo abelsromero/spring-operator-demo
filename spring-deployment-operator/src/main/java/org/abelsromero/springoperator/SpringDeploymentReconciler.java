@@ -32,10 +32,11 @@ public class SpringDeploymentReconciler implements Reconciler {
     private final CoreV1Api coreV1Api;
     private final AppsV1Api appsV1Api;
 
-    public SpringDeploymentReconciler(SharedIndexInformer<V1SpringDeployment> informer, CoreV1Api coreV1Api, AppsV1Api appsV1Api) {
+    public SpringDeploymentReconciler(SharedIndexInformer<V1SpringDeployment> informer,
+                                      Lister<V1SpringDeployment> springDeploymentsLister,
+                                      CoreV1Api coreV1Api, AppsV1Api appsV1Api) {
         this.informer = informer;
-        this.springDeploymentsLister = new Lister<>(informer.getIndexer());
-
+        this.springDeploymentsLister = springDeploymentsLister;
         this.coreV1Api = coreV1Api;
         this.appsV1Api = appsV1Api;
     }
