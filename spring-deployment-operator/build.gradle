@@ -11,7 +11,7 @@ group = 'org.abelsromero.springdeployment'
 version = '0.0.1-SNAPSHOT'
 
 ext {
-  kubernetesJavaClientVersion = '18.0.1'
+  kubernetesJavaClientVersion = '19.0.0'
 }
 
 repositories {
