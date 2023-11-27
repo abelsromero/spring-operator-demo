@@ -89,7 +89,7 @@ public class SpringDeploymentReconciler implements Reconciler {
     private V1DeploymentList listDeployments(String namespace) {
         try {
             return appsV1Api.listNamespacedDeployment(namespace,
-                null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null);
         } catch (ApiException e) {
             throw wrapApiException(e);
         }
