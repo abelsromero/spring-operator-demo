@@ -69,7 +69,7 @@ public class SpringDeploymentReconcilerTest {
         Mockito.when(springDeploymentsLister.get(requestName))
             .thenReturn(value);
         // no previous Spring Deployment exists
-        Mockito.when(appsApi.listNamespacedDeployment(deploymentNamespace, null, null, null, null, null, null, null, null, null, null))
+        Mockito.when(appsApi.listNamespacedDeployment(deploymentNamespace, null, null, null, null, null, null, null, null, null, null, null))
             .thenReturn(new V1DeploymentList());
 
         var request = new Request(requestNamespace, requestName);
@@ -100,7 +100,7 @@ public class SpringDeploymentReconcilerTest {
                 .spec(new V1DeploymentSpec()
                     .replicas(1))
             ));
-        Mockito.when(appsApi.listNamespacedDeployment(deploymentNamespace, null, null, null, null, null, null, null, null, null, null))
+        Mockito.when(appsApi.listNamespacedDeployment(deploymentNamespace, null, null, null, null, null,null, null, null, null, null, null))
             .thenReturn(deployments);
 
         try (MockedStatic<PatchUtils> patchUtilsMockedStatic = Mockito.mockStatic(PatchUtils.class)) {
