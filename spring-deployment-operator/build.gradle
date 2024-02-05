@@ -4,7 +4,7 @@ plugins {
   id 'java'
   id 'org.springframework.boot' version '3.1.5'
   // Comment graalvm plugin to build operator as normal Java
-  id 'org.graalvm.buildtools.native' version '0.9.28'
+  id 'org.graalvm.buildtools.native' version '0.10.0'
 }
 
 group = 'org.abelsromero.springdeployment'
